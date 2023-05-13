@@ -1,0 +1,17 @@
+name: MySQL Insert Action
+description: 'Inserts data to a MySQL database'
+inputs:
+  data:
+    description: 'The data to insert'
+    required: true
+outputs:
+  result:
+    description: 'The result of the insert operation'
+runs:
+  using: 'docker'
+  image: 'node:14-alpine'
+  entrypoint: 'node'
+  command: '/app/index.js'
+  env:
+    GITHUB_WORKSPACE: ${{ github.workspace }}
+  working-directory: '/app'
