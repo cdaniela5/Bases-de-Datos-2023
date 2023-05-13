@@ -1,21 +1,29 @@
 name: MySQL Insert Action
-on: [push]
+on:
+  push:
+    branches:
+      - main
 jobs:
   mysql-insert:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v2
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14.x'
-    - name: Install dependencies
-      run: npm install mysql
-    - name: Insert data
-      run: node insert.js
-      env:
-        MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
-        MYSQL_USER: ${{ secrets.MYSQL_USER }}
-        MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-        MYSQL_DATABASE: prueba
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+      - name: Install MySQL Client
+        run: sudo apt-get install -y mysql-client
+      - name: Insert records
+        env:
+          MYSQL_HOST: cualquiera123456.000webhostapp.com
+          MYSQL_PORT: 3306
+          MYSQL_DATABASE: prueba
+          MYSQL_USER: prueba123456
+          MYSQL_PASSWORD: Conprueba1*
+        run: |
+          mysql -h $MYSQL_HOST -P $MYSQL_PORT -u $MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE -e "INSERT INTO test_table (field1, field2, field3) VALUES ('value1', 'value2', 'value3')"
+          mysql -h $MYSQL_HOST -P $MYSQL_PORT -u $MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE -e "INSERT INTO test_table (field1, field2, field3) VALUES ('value4', 'value5', 'value6')"
+          mysql -h $MYSQL_HOST -P $MYSQL_PORT -u $MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE -e "INSERT INTO test_table (field1, field2, field3) VALUES ('value7', 'value8', 'value9')"
+          mysql -h $MYSQL_HOST -P $MYSQL_PORT -u $MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE -e "INSERT INTO test_table (field1, field2, field3) VALUES ('value10', 'value11', 'value12')"
